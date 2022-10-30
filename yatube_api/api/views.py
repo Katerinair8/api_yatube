@@ -1,13 +1,14 @@
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets
-from rest_framework import mixins 
+from rest_framework import mixins
 from rest_framework.permissions import AllowAny
 
 from posts.models import Post, Group, User
 from .serializers import PostSerializer, GroupSerializer, CommentSerializer, UserSerializer
 
-class PostViewSet(viewsets.ModelViewSet):   
+
+class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -29,14 +30,17 @@ class UserViewCreateSet(mixins.CreateModelMixin, mixins.ListModelMixin,
                         mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     pass
 
+
 class UserViewSet(UserViewCreateSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
+
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
@@ -55,7 +59,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         if serializer.instance.author != self.request.user:
             raise PermissionDenied('Изменение чужого контента запрещено!')
         super(CommentViewSet, self).perform_update(serializer)
-    
+
     def perform_destroy(self, instance):
         if instance.author != self.request.user:
             raise PermissionDenied('Удаление чужого контента запрещено!')

@@ -33,7 +33,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('id', 'text', 'pub_date', 'author', 'image', 'group', 'comments')
+        fields = ('id', 'text', 'pub_date', 'author',
+                  'image', 'group', 'comments')
+
 
 class GroupSerializer(serializers.ModelSerializer):
     # post = serializers.PrimaryKeyRelatedField(
@@ -46,7 +48,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    
+
     def create(self, validated_data):
         user = User.objects.create_user(
             username=validated_data['username'],
