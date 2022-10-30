@@ -5,7 +5,8 @@ from rest_framework import mixins
 from rest_framework.permissions import AllowAny
 
 from posts.models import Post, Group, User
-from .serializers import PostSerializer, GroupSerializer, CommentSerializer, UserSerializer
+from .serializers import (PostSerializer, GroupSerializer,
+                          CommentSerializer, UserSerializer)
 
 
 class PostViewSet(viewsets.ModelViewSet):
