@@ -1,6 +1,4 @@
 from django.urls import include, path
-from django.conf.urls.static import static
-from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 
@@ -20,11 +18,3 @@ urlpatterns = [
     path('v1/api-token-auth/', views.obtain_auth_token),
     path('v1/', include(router_v1.urls)),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-    )
-    urlpatterns += static(
-        settings.STATIC_URL, document_root=settings.STATIC_ROOT
-    )
