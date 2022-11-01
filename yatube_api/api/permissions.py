@@ -1,13 +1,12 @@
-from django.core.exceptions import PermissionDenied
-
 from rest_framework import permissions
 
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
+    message = 'Удаление чужого контента запрещено!'
 
     def has_object_permission(self, request, view, obj):
 
-        if obj.author != request.user:
-            raise PermissionDenied('Удаление чужого контента запрещено!')
+        if request.method in permissions.SAFE_METHODS:
+            return True
 
         return obj.author == request.user
